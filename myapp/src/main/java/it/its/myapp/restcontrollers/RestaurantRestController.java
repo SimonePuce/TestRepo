@@ -30,26 +30,27 @@ public class RestaurantRestController {
         return repo.findAll();
     }
 
-    @GetMapping(value = "/getById/{id}")
+    @GetMapping(value = "/getById/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant getById(@PathVariable String id) throws RestaurantNotFoundException {
         return repo.findById(id).orElseThrow(()-> new RestaurantNotFoundException());
     }
 
-    @GetMapping(value = "/getByName/{name}")
+    @GetMapping(value = "/getByName/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getByName(@PathVariable String name){
         return repo.findByName(name);
     }
 
-    @GetMapping(value = "/getByNameLike/{name}")
+    @GetMapping(value = "/getByNameLike/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getByNameLike(@PathVariable String name){
         return repo.findByNameLike(name);
     }
 
-    @GetMapping(value="/getRistorantiInZona/{name}")
-    public List<Restaurant> ristorantiInZona(@PathVariable String name) throws RestaurantNotFoundException{
+    @GetMapping(value="/getRistorantiInZona/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Restaurant> ristorantiInZona(@PathVariable String name){
         List<Neighborhood> neighborhoods = repoVicinati.findByName(name);
         Neighborhood checkZone = neighborhoods.get(0);
         GeoJson coordinate = checkZone.getGeometry();
+        //System.out.println(coordinate);
         return repo.ristorantiInZona(coordinate);
     }
 }
