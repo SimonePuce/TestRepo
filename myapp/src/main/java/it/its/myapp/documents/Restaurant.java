@@ -9,22 +9,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "restaurants")
 public class Restaurant {
     @Id
-    private ObjectId id;
+    private String id;
 
     private String name;
     private GeoJsonPoint location;
 
-    public Restaurant(ObjectId id, String name, GeoJsonPoint location) {
+    public Restaurant(String id, String name, GeoJsonPoint location) {
         this.id = id;
         this.name = name;
         this.location = location;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
