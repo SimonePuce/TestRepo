@@ -35,4 +35,9 @@ public class RestaurantRestController {
     public List<Restaurant> getByName(@PathVariable String name){
         return repo.findByName(name);
     }
+
+    @GetMapping(value = "/getByNameLike/{name}")
+    public List<Restaurant> getByNameLike(@PathVariable String name){
+        return repo.findByNameLike(name);
+    }
 }
