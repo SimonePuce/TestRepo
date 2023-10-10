@@ -1,0 +1,37 @@
+services: 
+
+  mongodb_its: 
+    image: mongo:latest
+    container_name: mongodb_its
+    ports: 
+      - 27017:27017
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - mongodbvol:/data/db
+    networks:
+      - mongodb-net
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: me_its
+    ports:
+      - 8081:8081
+    networks:
+      - mongodb-net
+    depends_on:
+      - mongodb_its
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: meuser
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mepass
+      ME_CONFIG_MONGODB_URL: "mongodb://root:root@mongodb_its:27017/?authSource=admin"
+    
+
+networks:
+  mongodb-net:
+    driver: bridge
+
+volumes: 
+  mongodbvol:
+

@@ -1,0 +1,36 @@
+1 db.restaurants.find({name: /steak/i})
+
+2 db.restaurants.find({categories:{$in: [/sandwiches/i]}})
+
+3 db.restaurants.find({'contact.email': {$regex: /.com/}})
+
+4 db.restaurants.find({$or:[{stars:{$gt:3}},{categories:{$in: [/steak/i]}}]})
+
+5 db.restaurants.find({$and:[{stars:{$gt:3}},{categories:{$in: ["Coffee"]}},{categories:{$in: ["Sandwiches"]}}]})
+
+
+db.restaurants.find({stars:2}, {name:true, stars:1, contact: {email: true}})
+
+db.restaurants.find().limit(2) //restituisce risultati uguali al numero di limit impostato
+
+db.restaurants.find({},{}, {limit:5 ,skip:2})
+
+db.restaurants.find().count()
+
+db.restaurants.find().sort({name: 1})//ordine crescente -1 ordine decrescente
+
+db.restaurants.updateOne({_id:ObjectId("57506d62f57802807471dd35")},{$set:{name: "ZZZZZZ PIZZERIADAALDO"}}) //modifica del campo trovato con l'id 
+
+db.restaurants.updateMany({stars:5}, {$set: {stars:4}})// modifica di più record
+
+db.restaurants.updateMany({}, {$set: {"contact.telegram": ""}}) //aggiunta nuovo campo o per modificare un campo esistente
+
+db.restaurants.updateMany({}, {$unset: {"contact.telegram": ""}}) //rimuovi un campo 
+
+db.restaurants.deleteOne({_id: ObjectId("57506d62f57802807471dd35")}) //rimozione di un document dalla collection 
+
+db.restaurants.deleteMany({stars:0}) //eliminare più document insieme 
+
+db.ristoranti.aggregate([{$match: {borough:'Bronx'}},{$unwind: "$grades"},{$group: {_id:"$cuisine", max:{$max: "$grades.score"}}},{$sort: {max: -1}}])
+
+db.ristoranti.find({'address.coord':{$geoWithin:{$center: [[-73.98513559999999, 40.7676919], 5/6378.1]}}}).explain("executionStats")

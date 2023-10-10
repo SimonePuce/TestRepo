@@ -1,0 +1,12 @@
+esercizio 9 ottobre
+
+mongoimport -u root -p root --db esercizio --collection restaurants --authenticationDatabase admin restaurants.json
+
+mongoimport -u root -p root --db esercizio --collection neighborhoods --authenticationDatabase admin neighborhoods.json
+
+var contaZone = db.neighborhoods.find().count()
+var idZona = [Math.floor(Math.random() * contaZone)]
+var numZona = idZona[0]
+var zonaDaFiltrare = db.neighborhoods.find().skip(numZona).limit(1).toArray()
+var coordinate = zonaDaFiltrare[0].geometry.coordinates
+db.restaurants.find({location:{$geoIntersects:{$geometry:{type:"Polygon", coordinates:coordinate}}}})
