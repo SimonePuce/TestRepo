@@ -16,5 +16,7 @@ public interface RestaurantRepository extends MongoRepository <Restaurant, Strin
 
     @Query("{'name':/?0/i}")
     public List<Restaurant> findByNameLike(String name);
-    public List<Restaurant> ristorantiInZona(Neighborhood neighborhood);
+
+    @Query("{location:{$geoIntersects:{$geometry:{coordinate}}}}}")
+    public List<Restaurant> ristorantiInZona(GeoJson coordinate);
 }
