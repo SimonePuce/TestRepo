@@ -15,4 +15,5 @@ public interface NeighborhoodRepository extends MongoRepository<Neighborhood, St
 
     @Query("{'name':/?0/i}")
     public List<Neighborhood> findByNameLike(String name);
+
 }

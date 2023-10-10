@@ -1,5 +1,6 @@
 package it.its.myapp.restcontrollers;
 
+import it.its.myapp.documents.Neighborhood;
 import it.its.myapp.documents.Restaurant;
 import it.its.myapp.exceptions.RestaurantNotFoundException;
 import it.its.myapp.repositories.RestaurantRepository;
@@ -37,5 +38,10 @@ public class RestaurantRestController {
     @GetMapping(value = "/getByNameLike/{name}")
     public List<Restaurant> getByNameLike(@PathVariable String name){
         return repo.findByNameLike(name);
+    }
+
+    @GetMapping(value="/getRistorantiInZona")
+    public List<Restaurant> ristorantiInZona(Neighborhood neighborhood){
+        neighborhood.getGeometry();
     }
 }
